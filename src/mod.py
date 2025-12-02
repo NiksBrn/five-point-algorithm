@@ -170,11 +170,11 @@ class EssentialMatrix(object):
         # Алгоритм 5 точек выдает корректные матрицы, дополнительная коррекция сингулярных чисел
         # требуется алгоритму 7 или 8 точек из-за учитывания меньших условий
         if self.NUMBER_OF_POINTS != 5:
-            U, S, Vt = svd_qr.robust_svd(E, 100)                   # Декомпозиция
+            U, S, Vt = svd_qr.robust_svd(E)                   # Декомпозиция
             S = [(S[0] + S[1]) / 2, (S[0] + S[1]) / 2, 0] # Первые два сингулярных числа равны, 3 - равно 0
             E = U @ np.diag(S) @ Vt                       # Обратная композиция
         
-        U, S, Vt = svd_qr.robust_svd(E, 100)
+        U, S, Vt = svd_qr.robust_svd(E)
         print('E dec\n', S, E)
         W = np.array([[0, -1, 0],
                       [1, 0, 0],
@@ -239,7 +239,7 @@ class EssentialMatrix(object):
         A[2] = x2[0] * P2[2] - P2[0]
         A[3] = x2[1] * P2[2] - P2[1]
 	    
-        _, _, Vt = svd_qr.robust_svd(A, 100)
+        _, _, Vt = svd_qr.robust_svd(A, 500)
         X = Vt[-1]
         return X[:3] / X[3]
 
