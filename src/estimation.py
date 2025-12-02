@@ -285,7 +285,7 @@ def fivePointsAlg(points1, points2):
                     x1, y1, 1])
     
     A = np.array(A)
-    U, S, Vt = svd_qr.robust_svd(A, 100)
+    U, S, Vt = svd_qr.robust_svd(A, 300)
     E_span = Vt[5:9]
     # получим массив из коэффициентов у переменных из 10 уравнений
     # A матрица 20 столбцов, 10 строк (10*20)
@@ -346,7 +346,7 @@ def fivePointsAlg(points1, points2):
             bz[j, 2] = br[8]*z4 + br[9]*z3 + br[10]*z2 + br[11]*z1 + br[12]
 
         # Решаем Bz * [x, y, 1]^T = 0
-        U, S, Vt = svd_qr.robust_svd(bz, 100)
+        U, S, Vt = svd_qr.robust_svd(bz, 300)
         xy1 = Vt[-1]  # последний столбец правых сингулярных векторов
 
         if abs(xy1[2]) < 1e-10:
