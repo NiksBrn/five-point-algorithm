@@ -93,12 +93,6 @@ def gram_schmidt(A):
     return Q, R
 
 
-def gram_schmidt_orthonormalization(matrix):
-    """Ортонормализация Грама-Шмидта"""
-    Q, _ = gram_schmidt(matrix)
-    return Q
-
-
 def verify_QR_decomposition(A, Q, R):
     """Проверяет корректность QR-разложения"""
     if A.size == 0 or Q.size == 0 or R.size == 0:
@@ -174,7 +168,7 @@ def _svd_tall_matrix(A, max_iterations, tolerance):
     Sigma = np.zeros((m, n), dtype=np.float64)
     singular_values = []
     for i in range(n):
-        eigenval = max(0.0, temp_ATA[i, i])  # Собственные значения неотрицательны
+        eigenval = max(0.0, temp_ATA[i, i])  # Неотрицательны
         sigma_val = np.sqrt(eigenval)
         Sigma[i, i] = sigma_val
         singular_values.append(sigma_val)

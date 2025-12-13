@@ -174,7 +174,7 @@ class EssentialMatrix(object):
             S = [(S[0] + S[1]) / 2, (S[0] + S[1]) / 2, 0] # Первые два сингулярных числа равны, 3 - равно 0
             E = U @ np.diag(S) @ Vt                       # Обратная композиция
         
-        U, S, Vt = svd_qr.robust_svd(E)
+        U, S, Vt = np.linalg.svd(E)
         print('E dec\n', S, E)
         W = np.array([[0, -1, 0],
                       [1, 0, 0],
@@ -239,7 +239,7 @@ class EssentialMatrix(object):
         A[2] = x2[0] * P2[2] - P2[0]
         A[3] = x2[1] * P2[2] - P2[1]
 	    
-        _, _, Vt = svd_qr.robust_svd(A, 500)
+        _, _, Vt = np.linalg.svd(A, 500)
         X = Vt[-1]
         return X[:3] / X[3]
 
@@ -247,7 +247,7 @@ class EssentialMatrix(object):
     def evulate(self):
         self.ransac()
         self.decomposeEssentialMatrix()
-        return self.R, self.t, (self.error, self.inliers)
+        return self.R, self.t, self.E
 
 def normalized(points):
     mean = np.mean(points, axis=0)

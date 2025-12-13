@@ -64,9 +64,11 @@ class MonoVisualOdometry:
                 E, mask = cv2.findEssentialMat(pts1, pts2, self.K, method=cv2.RANSAC, prob=0.999, threshold=1.0)
                 _, R, t, mask_pose = cv2.recoverPose(E, pts1, pts2, self.K)
             else:
-                R, t, _ = EssentialMatrix(pts1, pts2, K, 'Five').evulate()
+                R, t, E = EssentialMatrix(pts1, pts2, K, 'Five').evulate()
+                Ecv, _ = cv2.findEssentialMat(pts1, pts2, self.K, method=cv2.RANSAC, prob=0.999, threshold=1.0)
+                print(f'\nCompare:\n{np.linalg.norm(E-Ecv)}\n')
 
-            # --- Масштаб (пока фиктивный) ---
+            # --- Масштаб ---
             scale = 1.0
 
             # --- Обновляем позицию ---

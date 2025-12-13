@@ -285,7 +285,7 @@ def fivePointsAlg(points1, points2):
                     x1, y1, 1])
     
     A = np.array(A)
-    U, S, Vt = svd_qr.robust_svd(A, 300)
+    U, S, Vt = np.linalg.svd(A, 300)
     E_span = Vt[5:9]
     # получим массив из коэффициентов у переменных из 10 уравнений
     # A матрица 20 столбцов, 10 строк (10*20)
@@ -346,7 +346,7 @@ def fivePointsAlg(points1, points2):
             bz[j, 2] = br[8]*z4 + br[9]*z3 + br[10]*z2 + br[11]*z1 + br[12]
 
         # Решаем Bz * [x, y, 1]^T = 0
-        U, S, Vt = svd_qr.robust_svd(bz, 300)
+        U, S, Vt = np.linalg.svd(bz, 300)
         xy1 = Vt[-1]  # последний столбец правых сингулярных векторов
 
         if abs(xy1[2]) < 1e-10:
@@ -398,7 +398,7 @@ def eightPointsAlg(points1, points2, T1, T2):
         
         elif method =='SVD':
             # Решение уравнения A*vec(E)=0
-            U, S, Vt = svd_qr.robust_svd(A)
+            U, S, Vt = np.linalg.svd(A)
             # Проверки на вырожденность
             rank = np.sum(S > 1e-10)
             # eps = 1e-9
@@ -412,7 +412,7 @@ def eightPointsAlg(points1, points2, T1, T2):
         E = Vt[-1].reshape(3, 3)          #  Формирование матрицы
         
         # Приведение матрицы к рангу 2
-        U, S, Vt = svd_qr.robust_svd(E)                   # Декомпозиция
+        U, S, Vt = np.linalg.svd(E)                   # Декомпозиция
         S = [(S[0] + S[1]) / 2, (S[0] + S[1]) / 2, 0] # Первые два сингулярных числа равны, 3 - равно 0
         E = U @ np.diag(S) @ Vt    
 
